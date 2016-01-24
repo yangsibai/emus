@@ -45,9 +45,12 @@ func ListPages(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		log.Fatal(err)
 	}
 
+	names := make([]string, len(files))
+
 	for _, f := range files {
-		fmt.Fprintf(w, "%s\n", f.Name())
+		names = append(names, f.Name())
 	}
+	ren.HTML(w, http.StatusOK, "pages", names)
 }
 
 // render a single page by filename
