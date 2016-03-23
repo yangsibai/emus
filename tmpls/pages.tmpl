@@ -10,7 +10,7 @@
         <ul>
         {{ range . }}
         <li>
-            <a href="/page/{{ . }}">{{ . }}</a>
+            <a href="/page/{{ .ID.Hex }}">{{ .Title }}</a>
         </li>
         {{ end }}
         </ul>
