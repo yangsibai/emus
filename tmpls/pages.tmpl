@@ -11,6 +11,7 @@
         {{ range . }}
         <li>
             <a href="/page/{{ .ID.Hex }}">{{ .Title }}</a>
+            <span>{{ .CreatedAt.Format "1/2/06 15:04" }}</span>
         </li>
         {{ end }}
         </ul>
