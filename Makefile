@@ -1,5 +1,7 @@
-run:
-	go build -o emus
+run: build
 	./emus
+
+build:
+	go build -o emus
 
 .PHONY: run
