@@ -4,4 +4,7 @@ run: build
 build:
 	go build -o emus
 
-.PHONY: run
+live:
+	git push live
+
+.PHONY: run build live
