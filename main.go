@@ -32,6 +32,7 @@ func main() {
 	router.POST("/page", HandleAddPage)
 	router.GET("/pages", ListPages)
 	router.GET("/page/:id", RenderPage)
+	router.ServeFiles("/public/*filepath", http.Dir("public"))
 
 	log.Printf("emus is running at %s", config.Address)
 	log.Fatal(http.ListenAndServe(config.Address, router))

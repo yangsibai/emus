@@ -7,6 +7,7 @@ import (
 	"github.com/yangsibai/webutils"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -32,13 +33,28 @@ func HandleAddPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 	webutils.WriteResponse(w, page.ID.Hex())
 }
 
+type PageItem struct {
+	Page Page
+	Host string
+}
+
 // list all pages
 func ListPages(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	pages, err := GetAllPages()
 	if err != nil {
 		panic(err)
 	}
-	ren.HTML(w, http.StatusOK, "pages", pages)
+	var newPages []PageItem
+	for i := 0; i < len(pages); i++ {
+		page := pages[i]
+		u, err := url.Parse(page.URL)
+		if err != nil {
+			panic(err)
+		}
+		item := PageItem{pages[i], u.Host}
+		newPages = append(newPages, item)
+	}
+	ren.HTML(w, http.StatusOK, "pages", newPages)
 }
 
 // render a single page by filename
