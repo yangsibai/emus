@@ -18,10 +18,19 @@ $(function() {
         $time.text('');
     }
 
+    function leftPad(num) {
+        if (num < 10) {
+            return '0' + num;
+        }
+        return '' + num;
+    }
+
     function formatTime(str) {
         var t = new Date(str);
-        var date = t.toLocaleDateString();
-        var time = t.toLocaleTimeString();
+        //var date = t.toLocaleDateString();
+        //var time = t.toLocaleTimeString();
+        var date = t.getFullYear() + '/' + leftPad((t.getMonth() + 1)) + '/' + leftPad(t.getDate());
+        var time = leftPad(t.getHours()) + ':' + leftPad(t.getMinutes());
         return date + ' ' + time;
     }
 

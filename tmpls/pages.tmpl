@@ -23,15 +23,16 @@
             </li>
             {{ end }}
             </ul>
+            {{ $first := index . 0 }}
             <div class="content">
                 <div class="meta">
-                    <h3 class="title"></h3>
+                    <h3 class="title">{{ $first.Page.Title }}</h3>
                     <p class="info">
-                        <span class="time"></span>
-                        <a class="source" href=""></a>
+                    <span class="time">{{$first.Page.CreatedAt.Format "2006/01/02 15:04"}}</span>
+                    <a class="source" href="{{$first.Page.URL}}">{{$first.Host}}</a>
                     </p>
                 </div>
-                <iframe id="iframe"></iframe>
+                <iframe id="iframe" src="/page/{{$first.Page.ID.Hex}}"></iframe>
             </div>
         </div>
         <script src="/public/js/jquery-2.2.2.min.js"></script>
