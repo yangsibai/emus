@@ -28,9 +28,8 @@ func main() {
 
 	router := httprouter.New()
 
-	router.GET("/", Index)
+	router.GET("/", HandleHomePage)
 	router.POST("/page", HandleAddPage)
-	router.GET("/pages", ListPages)
 	router.GET("/page/:id", HandleRenderPage)
 	router.GET("/meta/:id", HandlePageMeta)
 	router.POST("/page/delete/:id", HandleDeletePage)

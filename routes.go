@@ -24,8 +24,23 @@ type PageMeta struct {
 	CreatedAt time.Time     `json:"created_at"`
 }
 
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	fmt.Fprint(w, "Welcome to emus!")
+// homepage: list all pages
+func HandleHomePage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	pages, err := GetAllPages()
+	if err != nil {
+		panic(err)
+	}
+	var newPages []PageItem
+	for i := 0; i < len(pages); i++ {
+		page := pages[i]
+		u, err := url.Parse(page.URL)
+		if err != nil {
+			panic(err)
+		}
+		item := PageItem{pages[i], u.Host}
+		newPages = append(newPages, item)
+	}
+	ren.HTML(w, http.StatusOK, "home", newPages)
 }
 
 func HandleAddPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -44,25 +59,6 @@ func HandleAddPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 		return
 	}
 	webutils.WriteResponse(w, page.ID.Hex())
-}
-
-// list all pages
-func ListPages(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	pages, err := GetAllPages()
-	if err != nil {
-		panic(err)
-	}
-	var newPages []PageItem
-	for i := 0; i < len(pages); i++ {
-		page := pages[i]
-		u, err := url.Parse(page.URL)
-		if err != nil {
-			panic(err)
-		}
-		item := PageItem{pages[i], u.Host}
-		newPages = append(newPages, item)
-	}
-	ren.HTML(w, http.StatusOK, "pages", newPages)
 }
 
 // render a single page by filename
