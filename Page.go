@@ -11,4 +11,5 @@ type Page struct {
 	URL       string        `json:"URL" bson:"URL"`
 	Content   string        `json:"content" bson:"content"`
 	CreatedAt time.Time     `json:"created_at" bson:"created_at"`
+	Deleted   bool          `json:"_" bson: "deleted"`
 }

@@ -66,3 +66,12 @@ func RenderPage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 	fmt.Fprint(w, page.Content)
 }
+
+func HandleDeletePage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	id := ps.ByName("id")
+	err := DeletePage(id)
+	if err != nil {
+		webutils.WriteErrorResponse(w, err)
+	}
+	webutils.WriteResponse(w, id)
+}

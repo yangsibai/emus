@@ -8,16 +8,18 @@
         <link rel="stylesheet" href="/public/css/style.css"></link>
     </head>
     <body class="pages">
-        <h1>Pages</h1>
         <div class="container">
             <ul>
             {{ range . }}
-            <li data-page-id="{{ .Page.ID.Hex }}">
+            <li id="{{ .Page.ID.Hex }}" data-page-id="{{ .Page.ID.Hex }}">
                 <h3>{{ .Page.Title }}</h3>
                 <div class="desc">
                     <span class="created-at">{{ .Page.CreatedAt.Format "1/2/06 15:04" }}</span>
                     <a href="/page/{{ .Page.ID.Hex }}">&#x2934;</a>
                     <a target="_blank" href="{{.Page.URL}}">{{ .Host }}</a>
+                </div>
+                <div class="tools">
+                    <span data-page-id="{{ .Page.ID.Hex }}" class="delete">Delete</span>
                 </div>
             </li>
             {{ end }}

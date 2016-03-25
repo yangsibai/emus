@@ -38,6 +38,15 @@ func GetAllPages() (pages []Page, err error) {
 	session := GetSession()
 	defer session.Close()
 	C := session.DB("emu").C("page")
-	err = C.Find(nil).All(&pages)
+	err = C.Find(bson.M{"deleted": bson.M{"$ne": true}}).Sort("-created_at").All(&pages)
 	return
+}
+
+func DeletePage(id string) error {
+	session := GetSession()
+	defer session.Close()
+	C := session.DB("emu").C("page")
+	change := bson.M{"$set": bson.M{"deleted": true}}
+	err := C.Update(bson.M{"_id": bson.ObjectIdHex(id)}, change)
+	return err
 }
