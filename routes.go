@@ -11,6 +11,19 @@ import (
 	"time"
 )
 
+type PageItem struct {
+	Page Page
+	Host string
+}
+
+type PageMeta struct {
+	ID        bson.ObjectId `json:"id"`
+	Title     string        `json:"title"`
+	URL       string        `json:"URL"`
+	Host      string        `json:"host"`
+	CreatedAt time.Time     `json:"created_at"`
+}
+
 func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	fmt.Fprint(w, "Welcome to emus!")
 }
@@ -33,11 +46,6 @@ func HandleAddPage(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 	webutils.WriteResponse(w, page.ID.Hex())
 }
 
-type PageItem struct {
-	Page Page
-	Host string
-}
-
 // list all pages
 func ListPages(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	pages, err := GetAllPages()
@@ -58,7 +66,7 @@ func ListPages(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 }
 
 // render a single page by filename
-func RenderPage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func HandleRenderPage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	id := ps.ByName("id")
 	page, err := GetPage(id)
 	if err != nil {
@@ -72,6 +80,30 @@ func HandleDeletePage(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	err := DeletePage(id)
 	if err != nil {
 		webutils.WriteErrorResponse(w, err)
+		return
 	}
 	webutils.WriteResponse(w, id)
+}
+
+func HandlePageMeta(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	id := ps.ByName("id")
+	page, err := GetPage(id)
+	if err != nil {
+		webutils.WriteErrorResponse(w, err)
+		return
+	}
+	var pageMeta PageMeta
+	host, err := getHost(page.URL)
+	if err != nil {
+		webutils.WriteErrorResponse(w, err)
+		return
+	}
+	pageMeta = PageMeta{page.ID, page.Title, page.URL, host, page.CreatedAt}
+	webutils.WriteResponse(w, pageMeta)
+}
+
+func getHost(URL string) (host string, err error) {
+	u, err := url.Parse(URL)
+	host = u.Host
+	return
 }

@@ -31,7 +31,8 @@ func main() {
 	router.GET("/", Index)
 	router.POST("/page", HandleAddPage)
 	router.GET("/pages", ListPages)
-	router.GET("/page/:id", RenderPage)
+	router.GET("/page/:id", HandleRenderPage)
+	router.GET("/meta/:id", HandlePageMeta)
 	router.POST("/page/delete/:id", HandleDeletePage)
 	router.ServeFiles("/public/*filepath", http.Dir("public"))
 

@@ -15,9 +15,7 @@
             <li id="{{ .Page.ID.Hex }}" data-page-id="{{ .Page.ID.Hex }}">
                 <h3>{{ .Page.Title }}</h3>
                 <div class="desc">
-                    <span class="created-at">{{ .Page.CreatedAt.Format "1/2/06 15:04" }}</span>
-                    <a href="/page/{{ .Page.ID.Hex }}">&#x2934;</a>
-                    <a target="_blank" href="{{.Page.URL}}">{{ .Host }}</a>
+                    <span>{{ .Host }}</span>
                 </div>
                 <div class="tools">
                     <span data-page-id="{{ .Page.ID.Hex }}" class="delete">Delete</span>
@@ -26,6 +24,13 @@
             {{ end }}
             </ul>
             <div class="content">
+                <div class="meta">
+                    <h3 class="title"></h3>
+                    <p class="info">
+                        <span class="time"></span>
+                        <a class="source" href=""></a>
+                    </p>
+                </div>
                 <iframe id="iframe"></iframe>
             </div>
         </div>
