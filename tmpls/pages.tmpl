@@ -11,8 +11,10 @@
         <h1>Pages</h1>
         <div class="container">
             <ul>
-            {{ range . }}
-            <li id="{{ .Page.ID.Hex }}" data-page-id="{{ .Page.ID.Hex }}">
+            {{ range $index, $element := . }}
+            <li id="{{ .Page.ID.Hex }}" 
+                data-page-id="{{ .Page.ID.Hex }}"
+                {{ if eq $index 0 }} class="current" {{ end }}>
                 <h3>{{ .Page.Title }}</h3>
                 <div class="desc">
                     <span>{{ .Host }}</span>
@@ -24,7 +26,9 @@
             {{ end }}
             </ul>
             {{ $first := index . 0 }}
-            <div class="content">
+            <div id="content" 
+                 class="content" 
+                 data-page-id="{{ $first.Page.ID.Hex }}">
                 <div class="meta">
                     <h3 class="title">{{ $first.Page.Title }}</h3>
                     <p class="info">

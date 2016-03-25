@@ -1,6 +1,6 @@
 $(function() {
     var $iframe = $('#iframe');
-    var currentPageID = null;
+    var currentPageID = $('#content').data('page-id');
 
     var $title = $('.content .title');
     var $source = $('.content .source');
