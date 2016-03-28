@@ -8,23 +8,28 @@
         <link rel="stylesheet" href="/public/css/style.css"></link>
     </head>
     <body class="home">
-        <h1>Emu</h1>
         <div class="container">
-            <ul>
-            {{ range $index, $element := . }}
-            <li id="{{ .Page.ID.Hex }}" 
-                data-page-id="{{ .Page.ID.Hex }}"
-                {{ if eq $index 0 }} class="current" {{ end }}>
-                <h3>{{ .Page.Title }}</h3>
-                <div class="desc">
-                    <span>{{ .Host }}</span>
+            <div class="left">
+                <div class="header">
+                    <h1>Emu</h1>
+                    <p class="info">by massimo</p>
                 </div>
-                <div class="tools">
-                    <span data-page-id="{{ .Page.ID.Hex }}" class="delete">Delete</span>
-                </div>
-            </li>
-            {{ end }}
-            </ul>
+                <ul>
+                {{ range $index, $element := . }}
+                <li id="{{ .Page.ID.Hex }}" 
+                    data-page-id="{{ .Page.ID.Hex }}"
+                    {{ if eq $index 0 }} class="current" {{ end }}>
+                    <h3>{{ .Page.Title }}</h3>
+                    <div class="desc">
+                        <span>{{ .Host }}</span>
+                    </div>
+                    <div class="tools">
+                        <span data-page-id="{{ .Page.ID.Hex }}" class="delete">Delete</span>
+                    </div>
+                </li>
+                {{ end }}
+                </ul>
+            </div>
             {{ $first := index . 0 }}
             <div id="content" 
                  class="content" 
@@ -33,7 +38,7 @@
                     <h3 class="title">{{ $first.Page.Title }}</h3>
                     <p class="info">
                     <span class="time">{{$first.Page.CreatedAt.Format "2006/01/02 15:04"}}</span>
-                    <a class="source" href="{{$first.Page.URL}}">{{$first.Host}}</a>
+                    <a target="_blank" class="source" href="{{$first.Page.URL}}">{{$first.Host}}</a>
                     </p>
                 </div>
                 <iframe id="iframe" src="/page/{{$first.Page.ID.Hex}}"></iframe>
