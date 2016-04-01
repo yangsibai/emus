@@ -71,6 +71,7 @@ func HandleRenderPage(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	fmt.Fprint(w, page.Content)
 }
 
+// delete a page
 func HandleDeletePage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	id := ps.ByName("id")
 	err := DeletePage(id)
@@ -81,6 +82,7 @@ func HandleDeletePage(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	webutils.WriteResponse(w, id)
 }
 
+// get page meta
 func HandlePageMeta(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	id := ps.ByName("id")
 	page, err := GetPage(id)
@@ -98,6 +100,7 @@ func HandlePageMeta(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	webutils.WriteResponse(w, pageMeta)
 }
 
+// get host from URL
 func getHost(URL string) (host string, err error) {
 	u, err := url.Parse(URL)
 	host = u.Host
