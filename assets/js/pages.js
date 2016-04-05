@@ -41,13 +41,13 @@ $(function() {
         }
         currentPageID = id;
         updateIframeSource("/page/" + id);
-        $.get('/meta/' + id, function (res) {
+        $.get('/meta/' + id, function(res) {
             if (res.code === 0) {
                 var page = res.payload;
                 $title.text(page.title);
                 $source.attr('href', page.URL).text(page.host);
                 $time.text(formatTime(page.created_at));
-                $link.text('#' + page.ID).attr('href', '/page/'+page.ID);
+                $link.text('#' + page.id).attr('href', '/page/' + page.id);
             } else {
                 alert(res.error);
             }
@@ -64,7 +64,7 @@ $(function() {
         var pageID = $(this).data('page-id');
         $.post("/page/delete/" + pageID, function(res) {
             if (res.code === 0) {
-                $('#' + pageID).slideUp(function () {
+                $('#' + pageID).slideUp(function() {
                     $(this).remove();
                     if (currentPageID === pageID) {
                         clear();
