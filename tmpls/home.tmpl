@@ -39,6 +39,7 @@
                     <p class="info">
                     <span class="time">{{$first.Page.CreatedAt.Format "2006/01/02 15:04"}}</span>
                     <a target="_blank" class="source" href="{{$first.Page.URL}}">{{$first.Host}}</a>
+                    <a target="_blank" class="link" href="/page/{{$first.Page.ID.Hex}}">#{{$first.Page.ID.Hex}}</a>
                     </p>
                 </div>
                 <iframe id="iframe" src="/page/{{$first.Page.ID.Hex}}"></iframe>

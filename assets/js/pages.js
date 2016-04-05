@@ -5,6 +5,7 @@ $(function() {
     var $title = $('.content .title');
     var $source = $('.content .source');
     var $time = $('.content .time');
+    var $link = $('.content .link');
 
     function updateIframeSource(src) {
         $iframe.attr("src", src);
@@ -46,6 +47,7 @@ $(function() {
                 $title.text(page.title);
                 $source.attr('href', page.URL).text(page.host);
                 $time.text(formatTime(page.created_at));
+                $link.text('#' + page.ID).attr('href', '/page/'+page.ID);
             } else {
                 alert(res.error);
             }
